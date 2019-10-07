@@ -1,0 +1,16 @@
+# $ docker run --name {コンテナ名} -e MYSQL_ROOT_PASSWORD={rootのパスワード} -d -p {ポート} {イメージ名:タグ}
+# $ docker run --name mysql -e MYSQL_ROOT_PASSWORD=mysql -d -p 3306:3306 mysql
+# $ docker ps
+# $ docker exec -it a939cd4979eb bash
+# root@a939cd4979eb:/#
+# root@a939cd4979eb:/# mysql -u root -p mysql
+# mysql>
+version: '3'
+services:
+  mysql:
+    build: ./mysql/ #Dockerfileからビルドすることを示す
+    volumes:
+      - ./mysql/data:/var/lib/mysql #永続的データ
+      - ./mysql/db:/docker-entrypoint-initdb.d #初期データ
+    environment:
+      - MYSQL_ROOT_PASSWORD=root #環境変数
